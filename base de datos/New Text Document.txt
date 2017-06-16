@@ -1,0 +1,44 @@
+create table paciente
+(
+    numeroAsegurado    	smallint        not null,
+    nombre             	varchar(30)     not null,
+    cedula				varchar(11)     not null,
+    edad				smallint        not null,
+    direccion			varchar(200)    not null,
+    telefono 			varchar(11)    	not null,
+    
+    CONSTRAINT          PK_codigoPaciente_paciente   PRIMARY KEY (numeroAsegurado)
+
+);
+
+
+
+
+create table consultaClasificacionCancer
+(
+    id_consulta 			serial,
+    numeroAsegurado      	smallint     not null,
+    grosorMasa        		smallint     not null,
+    uniformidadTamaño       smallint     not null,
+    uniformidadForma        smallint     not null,
+    adhesionMarginal        smallint     not null,
+    tamañoCelulaEpitelial   smallint     not null,
+    nucleoCelula        	smallint     not null,
+    cromatinaBlanda        	smallint     not null,
+    nucleoliNormal        	smallint     not null,
+    mitosis        			smallint     not null,
+    CONSTRAINT          	PK_codigoPaciente_consultaClasificacionCancer   PRIMARY KEY (id_consulta ),
+    CONSTRAINT            	FK_codigoPaciente_consultaClasificacionCancer   FOREIGN KEY (numeroAsegurado) REFERENCES paciente on update cascade
+);
+
+create table consultasPaciente(
+    numeroAsegurado    	smallint        not null,
+    id_consulta 		smallint        not null,
+    tipoCancer 			varchar(20)  	not null,
+    
+    CONSTRAINT          PK_codigoPaciente_consultasPaciente   PRIMARY KEY (numeroAsegurado,id_consulta),
+    CONSTRAINT          FK_codigoPaciente_consultaClasificacionCancer   FOREIGN KEY (numeroAsegurado) REFERENCES paciente on update cascade,
+    CONSTRAINT          FK_id_consulta_consultaClasificacionCancer   	FOREIGN KEY (id_consulta) REFERENCES consultaClasificacionCancer on update cascade
+
+
+);
