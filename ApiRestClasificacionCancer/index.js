@@ -46,10 +46,10 @@ app.get('/un_paciente',function (req, res, next) {
 })
 
 app.get('/insertarPaciente',function (req, res, next) {
-
-  db.none('insert into paciente(name, breed, age, sex)' +
-      'values(${name}, ${breed}, ${age}, ${sex})',
-    req.body)
+  var data = {numeroasegurado:2,nombre:'pablo',cedula:'21-4',edad:14,direccion:'tec',telefono:'88-12'}
+  db.none('insert into paciente (numeroasegurado, nombre, cedula, edad,direccion,telefono)' +
+      ' VALUES(${numeroasegurado}, ${nombre}, ${cedula}, ${edad},${direccion},${telefono})',
+    data)
     .then(function () {
       res.status(200)
         .json({
@@ -62,7 +62,21 @@ app.get('/insertarPaciente',function (req, res, next) {
     });
 })
 
-
+app.get('/updatePaciente',function(req, res, next) {
+  db.none('update pups set name=$1, breed=$2, age=$3, sex=$4 where id=$5',
+    [req.body.name, req.body.breed, parseInt(req.body.age),
+      req.body.sex, parseInt(req.params.id)])
+    .then(function () {
+      res.status(200)
+        .json({
+          status: 'success',
+          message: 'Updated puppy'
+        });
+    })
+    .catch(function (err) {
+      return next(err);
+    });
+})
 
 
 app.listen(8080, function(){
