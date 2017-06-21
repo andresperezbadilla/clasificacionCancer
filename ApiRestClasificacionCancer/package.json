@@ -13,6 +13,8 @@
   "license": "ISC",
   "dependencies": {
     "bluebird": "^3.5.0",
-    "pg-promise": "^5.9.3"
+    "body-parser": "^1.17.2",
+    "express": "^4.15.3",
+    "pg-promise": "^5.9.4"
   }
 }

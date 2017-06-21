@@ -16,8 +16,8 @@ var db = pgp(connectionString);
 /*-------------------------------------------CRUD PACIENTE-----------------------------------*/
 
 //Obtiene los pasientes
-app.get('/obtenerPacientes',function(req, res, next) {
-    console.log('here')
+app.get('/obtenerPacientes', function (req, res, next) {
+  console.log('here')
   db.any('select * from paciente')
     .then(function (data) {
       res.status(200)
@@ -32,9 +32,9 @@ app.get('/obtenerPacientes',function(req, res, next) {
     });
 })
 //obtiene un paciente recibe un objeto {numeroAsegurado: ###}
-app.post('/un_paciente',function (req, res, next) {
-  data = {numeroAsegurado:req.body.numAsegurado}
-  db.one('select * from paciente where codigopaciente = ${numeroAsegurado}',data)
+app.post('/un_paciente', function (req, res, next) {
+  data = { numeroAsegurado: req.body.numAsegurado }
+  db.one('select * from paciente where codigopaciente = ${numeroAsegurado}', data)
     .then(function (data) {
       res.status(200)
         .json({
@@ -48,10 +48,10 @@ app.post('/un_paciente',function (req, res, next) {
     });
 })
 //inserta un paciente recibe un objeto {numeroasegurado: 4,nombre:juan ,cedula: 1,edad: 43,direccion: San ramon,telefono:88}
-app.post('/insertarPaciente',function (req, res, next) {
-  var data = {numeroasegurado:req.body.numAsegurado,nombre:req.body.name,cedula:req.body.cedula,edad:req.body.edad,direccion:req.body.dir,telefono:req.body.tel}
+app.post('/insertarPaciente', function (req, res, next) {
+  var data = { numeroasegurado: req.body.numAsegurado, nombre: req.body.name, cedula: req.body.cedula, edad: req.body.edad, direccion: req.body.dir, telefono: req.body.tel }
   db.none('insert into paciente (numeroasegurado, nombre, cedula, edad,direccion,telefono)' +
-      ' VALUES(${numeroasegurado}, ${nombre}, ${cedula}, ${edad},${direccion},${telefono})',
+    ' VALUES(${numeroasegurado}, ${nombre}, ${cedula}, ${edad},${direccion},${telefono})',
     data)
     .then(function () {
       res.status(200)
@@ -65,10 +65,10 @@ app.post('/insertarPaciente',function (req, res, next) {
     });
 })
 //actualiza un paciente recibe un objeto {numeroasegurado: 4,nombre:juan ,cedula: 1,edad: 43,direccion: San ramon,telefono:88}
-app.post('/updatePaciente',function(req, res, next) {
-  var data = {numeroasegurado:req.body.numAsegurado,nombre:req.body.name,cedula:req.body.cedula,edad:req.body.edad,direccion:req.body.dir,telefono:req.body.tel}
-  db.none('update paciente set numeroasegurado=${numeroasegurado}, nombre=${nombre}, cedula=${cedula}, edad=${edad},'+
-   'direccion=${direccion}, telefono=${telefono} where numeroasegurado=${numeroasegurado}',
+app.post('/updatePaciente', function (req, res, next) {
+  var data = { numeroasegurado: req.body.numAsegurado, nombre: req.body.name, cedula: req.body.cedula, edad: req.body.edad, direccion: req.body.dir, telefono: req.body.tel }
+  db.none('update paciente set numeroasegurado=${numeroasegurado}, nombre=${nombre}, cedula=${cedula}, edad=${edad},' +
+    'direccion=${direccion}, telefono=${telefono} where numeroasegurado=${numeroasegurado}',
     data)
     .then(function () {
       res.status(200)
@@ -82,7 +82,7 @@ app.post('/updatePaciente',function(req, res, next) {
     });
 })
 //elimina un paciente recibe un objeto {numeroAsegurado: ##}
-app.post('/deletePaciente',function(req, res, next) {
+app.post('/deletePaciente', function (req, res, next) {
   var numAsegurado = req.body.numAsegurado;
   db.result('delete from paciente where numeroasegurado = $1', numAsegurado)
     .then(function (result) {
@@ -103,7 +103,7 @@ app.post('/deletePaciente',function(req, res, next) {
 /*-------------------------------------------CRUD Consulta-----------------------------------*/
 
 //Obtiene las consultas
-app.get('/obtenerConsultas',function(req, res, next) {
+app.get('/obtenerConsultas', function (req, res, next) {
   db.any('select * from consultaclasificacioncancer')
     .then(function (data) {
       res.status(200)
@@ -118,9 +118,9 @@ app.get('/obtenerConsultas',function(req, res, next) {
     });
 })
 //obtiene una consulta recibe un objeto {id_consulta: ###}
-app.post('/una_consulta',function (req, res, next) {
-  data = {id_consulta:req.body.id}
-  db.one('select * from consultaclasificacioncancer where id_consulta = ${id_consulta}',data)
+app.post('/una_consulta', function (req, res, next) {
+  data = { id_consulta: req.body.id }
+  db.one('select * from consultaclasificacioncancer where id_consulta = ${id_consulta}', data)
     .then(function (data) {
       res.status(200)
         .json({
@@ -139,13 +139,15 @@ app.post('/una_consulta',function (req, res, next) {
     uniformidadforma:##,adhesionmarginal:##,	tamañocelulaepitelial:##,nucleocelula:##
   ,	cromatinablanda:##,nucleolinormal:##,mitosis:##}
 */
-app.post('/insertarConsulta',function (req, res, next) {
-  var data = {numeroasegurado:req.body.numeroasegurado,grosormasa:req.body.grosormasa,uniformidadtamaño:req.body.uniformidadtamaño,
-    uniformidadforma:req.body.uniformidadforma,adhesionmarginal:req.body.adhesionmarginal,	tamañocelulaepitelial:req.body.tamañocelulaepitelial,nucleocelula:req.body.nucleocelula
-  ,	cromatinablanda:req.body.cromatinablanda,nucleolinormal:req.body.nucleolinormal,mitosis:req.body.mitosis}
-  db.none('insert into consultaclasificacioncancer (numeroasegurado, grosormasa, uniformidadtamaño, uniformidadforma,adhesionmarginal,tamañocelulaepitelial,nucleocelula,'+
-  'cromatinablanda,nucleolinormal,mitosis)' +
-      ' VALUES(${numeroasegurado}, ${grosormasa}, ${uniformidadtamaño}, ${uniformidadforma},${adhesionmarginal},${tamañocelulaepitelial},${nucleocelula}, ${cromatinablanda}, ${nucleolinormal}, ${mitosis})',
+app.post('/insertarConsulta', function (req, res, next) {
+  var data = {
+    numeroasegurado: req.body.numeroasegurado, grosormasa: req.body.grosormasa, uniformidadtamaño: req.body.uniformidadtamaño,
+    uniformidadforma: req.body.uniformidadforma, adhesionmarginal: req.body.adhesionmarginal, tamañocelulaepitelial: req.body.tamañocelulaepitelial, nucleocelula: req.body.nucleocelula
+    , cromatinablanda: req.body.cromatinablanda, nucleolinormal: req.body.nucleolinormal, mitosis: req.body.mitosis
+  }
+  db.none('insert into consultaclasificacioncancer (numeroasegurado, grosormasa, uniformidadtamaño, uniformidadforma,adhesionmarginal,tamañocelulaepitelial,nucleocelula,' +
+    'cromatinablanda,nucleolinormal,mitosis)' +
+    ' VALUES(${numeroasegurado}, ${grosormasa}, ${uniformidadtamaño}, ${uniformidadforma},${adhesionmarginal},${tamañocelulaepitelial},${nucleocelula}, ${cromatinablanda}, ${nucleolinormal}, ${mitosis})',
     data)
     .then(function () {
       res.status(200)
@@ -162,27 +164,109 @@ app.post('/insertarConsulta',function (req, res, next) {
 {numeroasegurado:##,grosormasa:##,uniformidadtamaño:##,
     uniformidadforma:##,adhesionmarginal:##,	tamañocelulaepitelial:##,nucleocelula:##
   ,	cromatinablanda:##,nucleolinormal:##,mitosis:##}
-*/
-app.post('/updatePaciente',function(req, res, next) {
-  var data = {numeroasegurado:req.body.numeroasegurado,grosormasa:req.body.grosormasa,uniformidadtamaño:req.body.uniformidadtamaño,
-    uniformidadforma:req.body.uniformidadforma,adhesionmarginal:req.body.adhesionmarginal,	tamañocelulaepitelial:req.body.tamañocelulaepitelial,nucleocelula:req.body.nucleocelula
-  ,	cromatinablanda:req.body.cromatinablanda,nucleolinormal:req.body.nucleolinormal,mitosis:req.body.mitosis}
-  db.none('update consultaclasificacioncancer set numeroasegurado=${numeroasegurado}, grosormasa=${grosormasa}, uniformidadtamaño=${uniformidadtamaño}, uniformidadforma=${uniformidadforma},'+
-   'adhesionmarginal=${adhesionmarginal}, tamañocelulaepitelial=${tamañocelulaepitelial}, nucleocelula=${nucleocelula}, cromatinablanda=${cromatinablanda}, nucleolinormal=${nucleolinormal} , mitosis=${mitosis} where numeroasegurado=${numeroasegurado}',
-    data)
-    .then(function () {
-      res.status(200)
-        .json({
-          status: 'success',
-          message: 'Updated consulta'
-        });
-    })
-    .catch(function (err) {
-      return next(err);
+
+*/app.get('/updatePaciente', function (req, res, next) {
+
+  a = 8;
+  b = 10;
+  c = 10;
+  d = 8;
+  e = 7;
+  f = 10;
+  g = 9;
+  h = 7;
+  i = 1;
+
+  try {
+
+    var child_process = require('child_process');
+    var cmd = 'Rscript C:\\Users\\Efren\\Desktop\\coloquio\\predict_model.R ' + a + " " + b + " " + c + " " + d + " " + e + " " + f + " " + g + " " + h + " " + i;
+    var exec = child_process.exec;
+    
+    exec(cmd, (error, stdout, stderr) => {
+      if (error) {
+        console.error(error);
+        return;
+      }
+      response = stdout.replace("[1]", "").replace("[1]", "").split("\r\n");
+
+      if (response[0].trim() == 1) {
+        res.end('benigno');
+      }
+      else {
+        res.end('maligno');
+      }
     });
+
+  }
+  catch (err) {
+    console.log(err);
+  }
+})
+
+app.post('/updatePaciente', function (req, res, next) {
+  /* var data = {numeroasegurado:req.body.numeroasegurado,grosormasa:req.body.grosormasa,uniformidadtamaño:req.body.uniformidadtamaño,
+     uniformidadforma:req.body.uniformidadforma,adhesionmarginal:req.body.adhesionmarginal,	tamañocelulaepitelial:req.body.tamañocelulaepitelial,nucleocelula:req.body.nucleocelula
+   ,	cromatinablanda:req.body.cromatinablanda,nucleolinormal:req.body.nucleolinormal,mitosis:req.body.mitosis}
+   db.none('update consultaclasificacioncancer set numeroasegurado=${numeroasegurado}, grosormasa=${grosormasa}, uniformidadtamaño=${uniformidadtamaño}, uniformidadforma=${uniformidadforma},'+
+    'adhesionmarginal=${adhesionmarginal}, tamañocelulaepitelial=${tamañocelulaepitelial}, nucleocelula=${nucleocelula}, cromatinablanda=${cromatinablanda}, nucleolinormal=${nucleolinormal} , mitosis=${mitosis} where numeroasegurado=${numeroasegurado}',
+     data)
+     .then(function () {
+       res.status(200)
+         .json({
+           status: 'success',
+           message: 'Updated consulta'
+         });
+     })
+     .catch(function (err) {
+       return next(err);
+     });*/
+
+
+  a = grosormasa;
+  b = uniformidadtamaño;
+  c = uniformidadforma;
+  d = adhesionmarginal;
+  e = tamañocelulaepitelial;
+  f = nucleocelula;
+  g = cromatinablanda;
+  h = nucleolinormal;
+  i = mitosis;
+
+  a = 8;
+  b = 10;
+  c = 10;
+  d = 8;
+  e = 7;
+  f = 10;
+  g = 9;
+  h = 7;
+  i = 1;
+
+  var child_process = require('child_process');
+  var cmd = 'Rscript C:\\Users\\Efren\\Desktop\\coloquio\\predict_model.R ' + a + " " + b + " " + c + " " + d + " " + e + " " + f + " " + g + " " + h + " " + i;
+  var exec = child_process.exec;
+
+  exec(cmd, (error, stdout, stderr) => {
+    if (error) {
+      console.error(error);
+      return;
+    }
+    response = stdout.replace("[1]", "").replace("[1]", "").split("\r\n");
+
+    if (response[0].trim() == 1) {
+      return "benigno";
+    }
+    else {
+      return "maligno";
+    }
+  });
+
+
+
 })
 //elimina una consulta recibe un objeto {numeroAsegurado: ##}
-app.post('/deletePaciente',function(req, res, next) {
+app.post('/deletePaciente', function (req, res, next) {
   var numAsegurado = req.body.numAsegurado;
   db.result('delete from consultaclasificacioncancer where numeroasegurado = $1', numAsegurado)
     .then(function (result) {
@@ -202,6 +286,6 @@ app.post('/deletePaciente',function(req, res, next) {
 
 
 
-app.listen(8080, function(){
-		console.log("Running at Port 8080")
-	})
+app.listen(8080, function () {
+  console.log("Running at Port 8080")
+})

@@ -1,44 +1,45 @@
-create table paciente
+CREATE TABLE paciente
 (
-    numeroAsegurado    	smallint        not null,
-    nombre             	varchar(30)     not null,
-    cedula				varchar(11)     not null,
-    edad				smallint        not null,
-    direccion			varchar(200)    not null,
-    telefono 			varchar(11)    	not null,
-    
-    CONSTRAINT          PK_codigoPaciente_paciente   PRIMARY KEY (numeroAsegurado)
+  numeroasegurado smallint NOT NULL,
+  nombre character varying(30) NOT NULL,
+  cedula character varying(11) NOT NULL,
+  edad smallint NOT NULL,
+  direccion character varying(200) NOT NULL,
+  telefono character varying(11) NOT NULL,
+  CONSTRAINT pk_codigopaciente_paciente PRIMARY KEY (numeroasegurado)
+);
 
+CREATE TABLE history
+(
+  id_consulta serial NOT NULL,
+  numero_asegurado smallint DEFAULT '-1'::integer,
+  grosor_masa smallint NOT NULL,
+  uniformidad_tamano smallint NOT NULL,
+  uniformidad_forma smallint NOT NULL,
+  adhesion_marginal smallint NOT NULL,
+  tamano_celula_epitelial smallint NOT NULL,
+  nucleo_celula smallint,
+  cromatina_blanda smallint NOT NULL,
+  nucleoli smallint NOT NULL,
+  mitosis smallint NOT NULL,
+  class integer,
+  CONSTRAINT pk_codigopaciente_consultaclasificacioncancer PRIMARY KEY (id_consulta),
+  CONSTRAINT fk_codigopaciente_consultaclasificacioncancer FOREIGN KEY (numero_asegurado)
+      REFERENCES public.paciente (numeroasegurado) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE NO ACTION
 );
 
 
-
-
-create table consultaClasificacionCancer
+CREATE TABLE consultaspaciente
 (
-    id_consulta 			serial,
-    numeroAsegurado      	smallint     not null,
-    grosorMasa        		smallint     not null,
-    uniformidadTamaño       smallint     not null,
-    uniformidadForma        smallint     not null,
-    adhesionMarginal        smallint     not null,
-    tamañoCelulaEpitelial   smallint     not null,
-    nucleoCelula        	smallint     not null,
-    cromatinaBlanda        	smallint     not null,
-    nucleoliNormal        	smallint     not null,
-    mitosis        			smallint     not null,
-    CONSTRAINT          	PK_codigoPaciente_consultaClasificacionCancer   PRIMARY KEY (id_consulta ),
-    CONSTRAINT            	FK_codigoPaciente_consultaClasificacionCancer   FOREIGN KEY (numeroAsegurado) REFERENCES paciente on update cascade
-);
-
-create table consultasPaciente(
-    numeroAsegurado    	smallint        not null,
-    id_consulta 		smallint        not null,
-    tipoCancer 			varchar(20)  	not null,
-    
-    CONSTRAINT          PK_codigoPaciente_consultasPaciente   PRIMARY KEY (numeroAsegurado,id_consulta),
-    CONSTRAINT          FK_codigoPaciente_consultaClasificacionCancer   FOREIGN KEY (numeroAsegurado) REFERENCES paciente on update cascade,
-    CONSTRAINT          FK_id_consulta_consultaClasificacionCancer   	FOREIGN KEY (id_consulta) REFERENCES consultaClasificacionCancer on update cascade
-
-
+  numeroasegurado smallint NOT NULL,
+  id_consulta smallint NOT NULL,
+  tipocancer character varying(20) NOT NULL,
+  CONSTRAINT pk_codigopaciente_consultaspaciente PRIMARY KEY (numeroasegurado, id_consulta),
+  CONSTRAINT fk_codigopaciente_consultaclasificacioncancer FOREIGN KEY (numeroasegurado)
+      REFERENCES public.paciente (numeroasegurado) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE NO ACTION,
+  CONSTRAINT fk_id_consulta_consultaclasificacioncancer FOREIGN KEY (id_consulta)
+      REFERENCES public.history (id_consulta) MATCH SIMPLE
+      ON UPDATE CASCADE ON DELETE NO ACTION
 );
