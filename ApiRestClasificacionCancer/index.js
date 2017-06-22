@@ -165,7 +165,31 @@ app.post('/insertarConsulta', function (req, res, next) {
     uniformidadforma:##,adhesionmarginal:##,	tamañocelulaepitelial:##,nucleocelula:##
   ,	cromatinablanda:##,nucleolinormal:##,mitosis:##}
 
-*/app.get('/updatePaciente', function (req, res, next) {
+app.get('/updatePaciente', function (req, res, next) {
+*/
+
+app.get('/actulizar_modelo', function (req, res, next) {
+  try {
+
+    var child_process = require('child_process');
+    var cmd = 'Rscript C:\\Users\\Efren\\Desktop\\coloquio\\clasificacionCancer\\ApiRestClasificacionCancer\\create_model.R';
+    var exec = child_process.exec;
+    
+    exec(cmd, (error, stdout, stderr) => {
+      if (error) {
+        console.error(error);
+        return;
+      }
+      res.end(stdout);
+    });
+
+  }
+  catch (err) {
+    console.log(err);
+  }
+})
+
+app.get('/updatePaciente', function (req, res, next) {
 
   a = 8;
   b = 10;
@@ -180,7 +204,7 @@ app.post('/insertarConsulta', function (req, res, next) {
   try {
 
     var child_process = require('child_process');
-    var cmd = 'Rscript C:\\Users\\Efren\\Desktop\\coloquio\\predict_model.R ' + a + " " + b + " " + c + " " + d + " " + e + " " + f + " " + g + " " + h + " " + i;
+    var cmd = 'Rscript C:\\Users\\Efren\\Desktop\\coloquio\\clasificacionCancer\\ApiRestClasificacionCancer\\predict_model.R ' + a + " " + b + " " + c + " " + d + " " + e + " " + f + " " + g + " " + h + " " + i;
     var exec = child_process.exec;
     
     exec(cmd, (error, stdout, stderr) => {
