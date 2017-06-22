@@ -33,8 +33,8 @@ app.get('/obtenerPacientes', function (req, res, next) {
 })
 //obtiene un paciente recibe un objeto {numeroAsegurado: ###}
 app.post('/un_paciente', function (req, res, next) {
-  data = { numeroAsegurado: req.body.numAsegurado }
-  db.one('select * from paciente where codigopaciente = ${numeroAsegurado}', data)
+  data = { numero_segurado: req.body.num_asegurado }
+  db.one('select * from paciente where codigopaciente = ${numero_segurado}', data)
     .then(function (data) {
       res.status(200)
         .json({
@@ -49,9 +49,9 @@ app.post('/un_paciente', function (req, res, next) {
 })
 //inserta un paciente recibe un objeto {numeroasegurado: 4,nombre:juan ,cedula: 1,edad: 43,direccion: San ramon,telefono:88}
 app.post('/insertarPaciente', function (req, res, next) {
-  var data = { numeroasegurado: req.body.numAsegurado, nombre: req.body.name, cedula: req.body.cedula, edad: req.body.edad, direccion: req.body.dir, telefono: req.body.tel }
-  db.none('insert into paciente (numeroasegurado, nombre, cedula, edad,direccion,telefono)' +
-    ' VALUES(${numeroasegurado}, ${nombre}, ${cedula}, ${edad},${direccion},${telefono})',
+  var data = { numero_asegurado: req.body.num_asegurado, nombre: req.body.name, cedula: req.body.cedula, edad: req.body.edad, direccion: req.body.dir, telefono: req.body.tel }
+  db.none('insert into paciente (numero_asegurado, nombre, cedula, edad,direccion,telefono)' +
+    ' VALUES(${numero_asegurado}, ${nombre}, ${cedula}, ${edad},${direccion},${telefono})',
     data)
     .then(function () {
       res.status(200)
@@ -66,9 +66,9 @@ app.post('/insertarPaciente', function (req, res, next) {
 })
 //actualiza un paciente recibe un objeto {numeroasegurado: 4,nombre:juan ,cedula: 1,edad: 43,direccion: San ramon,telefono:88}
 app.post('/updatePaciente', function (req, res, next) {
-  var data = { numeroasegurado: req.body.numAsegurado, nombre: req.body.name, cedula: req.body.cedula, edad: req.body.edad, direccion: req.body.dir, telefono: req.body.tel }
-  db.none('update paciente set numeroasegurado=${numeroasegurado}, nombre=${nombre}, cedula=${cedula}, edad=${edad},' +
-    'direccion=${direccion}, telefono=${telefono} where numeroasegurado=${numeroasegurado}',
+  var data = { numero_asegurado: req.body.num_asegurado, nombre: req.body.name, cedula: req.body.cedula, edad: req.body.edad, direccion: req.body.dir, telefono: req.body.tel }
+  db.none('update paciente set numero_asegurado=${numero_asegurado}, nombre=${nombre}, cedula=${cedula}, edad=${edad},' +
+    'direccion=${direccion}, telefono=${telefono} where numero_asegurado=${numero_asegurado}',
     data)
     .then(function () {
       res.status(200)
@@ -83,8 +83,8 @@ app.post('/updatePaciente', function (req, res, next) {
 })
 //elimina un paciente recibe un objeto {numeroAsegurado: ##}
 app.post('/deletePaciente', function (req, res, next) {
-  var numAsegurado = req.body.numAsegurado;
-  db.result('delete from paciente where numeroasegurado = $1', numAsegurado)
+  var num_asegurado = req.body.num_asegurado;
+  db.result('delete from paciente where numero_asegurado = $1', num_asegurado)
     .then(function (result) {
 
       res.status(200)
@@ -104,7 +104,7 @@ app.post('/deletePaciente', function (req, res, next) {
 
 //Obtiene las consultas
 app.get('/obtenerConsultas', function (req, res, next) {
-  db.any('select * from consultaclasificacioncancer')
+  db.any('select * from history')
     .then(function (data) {
       res.status(200)
         .json({
@@ -120,7 +120,7 @@ app.get('/obtenerConsultas', function (req, res, next) {
 //obtiene una consulta recibe un objeto {id_consulta: ###}
 app.post('/una_consulta', function (req, res, next) {
   data = { id_consulta: req.body.id }
-  db.one('select * from consultaclasificacioncancer where id_consulta = ${id_consulta}', data)
+  db.one('select * from history where id_consulta = ${id_consulta}', data)
     .then(function (data) {
       res.status(200)
         .json({
@@ -141,13 +141,13 @@ app.post('/una_consulta', function (req, res, next) {
 */
 app.post('/insertarConsulta', function (req, res, next) {
   var data = {
-    numeroasegurado: req.body.numeroasegurado, grosormasa: req.body.grosormasa, uniformidadtamaño: req.body.uniformidadtamaño,
-    uniformidadforma: req.body.uniformidadforma, adhesionmarginal: req.body.adhesionmarginal, tamañocelulaepitelial: req.body.tamañocelulaepitelial, nucleocelula: req.body.nucleocelula
-    , cromatinablanda: req.body.cromatinablanda, nucleolinormal: req.body.nucleolinormal, mitosis: req.body.mitosis
+    numero_asegurado: req.body.numero_asegurado, grosormasa: req.body.grosormasa, uniformidad_tamaño: req.body.uniformidad_tamaño,
+    uniformidad_forma: req.body.uniformidad_forma, adhesion_marginal: req.body.adhesion_marginal, tamaño_celula_epitelial: req.body.tamaño_celula_epitelial, nucleo_celula: req.body.nucleo_celula
+    , cromatina_blanda: req.body.cromatina_blanda, nucleoli_normal: req.body.nucleoli_normal, mitosis: req.body.mitosis
   }
-  db.none('insert into consultaclasificacioncancer (numeroasegurado, grosormasa, uniformidadtamaño, uniformidadforma,adhesionmarginal,tamañocelulaepitelial,nucleocelula,' +
-    'cromatinablanda,nucleolinormal,mitosis)' +
-    ' VALUES(${numeroasegurado}, ${grosormasa}, ${uniformidadtamaño}, ${uniformidadforma},${adhesionmarginal},${tamañocelulaepitelial},${nucleocelula}, ${cromatinablanda}, ${nucleolinormal}, ${mitosis})',
+  db.none('insert into history (numero_asegurado, grosormasa, uniformidad_tamaño, uniformidad_forma,adhesion_marginal,tamaño_celula_epitelial,nucleo_celula,' +
+    'cromatina_blanda,nucleoli_normal,mitosis)' +
+    ' VALUES(${numero_asegurado}, ${grosormasa}, ${uniformidad_tamaño}, ${uniformidad_forma},${adhesion_marginal},${tamaño_celula_epitelial},${nucleo_celula}, ${cromatina_blanda}, ${nucleoli_normal}, ${mitosis})',
     data)
     .then(function () {
       res.status(200)
@@ -229,11 +229,11 @@ app.get('/updatePaciente', function (req, res, next) {
 })
 
 app.post('/updatePaciente', function (req, res, next) {
-  /* var data = {numeroasegurado:req.body.numeroasegurado,grosormasa:req.body.grosormasa,uniformidadtamaño:req.body.uniformidadtamaño,
-     uniformidadforma:req.body.uniformidadforma,adhesionmarginal:req.body.adhesionmarginal,	tamañocelulaepitelial:req.body.tamañocelulaepitelial,nucleocelula:req.body.nucleocelula
-   ,	cromatinablanda:req.body.cromatinablanda,nucleolinormal:req.body.nucleolinormal,mitosis:req.body.mitosis}
-   db.none('update consultaclasificacioncancer set numeroasegurado=${numeroasegurado}, grosormasa=${grosormasa}, uniformidadtamaño=${uniformidadtamaño}, uniformidadforma=${uniformidadforma},'+
-    'adhesionmarginal=${adhesionmarginal}, tamañocelulaepitelial=${tamañocelulaepitelial}, nucleocelula=${nucleocelula}, cromatinablanda=${cromatinablanda}, nucleolinormal=${nucleolinormal} , mitosis=${mitosis} where numeroasegurado=${numeroasegurado}',
+  /* var data = {numero_asegurado:req.body.numero_asegurado,grosormasa:req.body.grosormasa,uniformidad_tamaño:req.body.uniformidad_tamaño,
+     uniformidad_forma:req.body.uniformidad_forma,adhesion_marginal:req.body.adhesion_marginal,	tamaño_celula_epitelial:req.body.tamaño_celula_epitelial,nucleo_celula:req.body.nucleo_celula
+   ,	cromatina_blanda:req.body.cromatina_blanda,nucleoli_normal:req.body.nucleoli_normal,mitosis:req.body.mitosis}
+   db.none('update history set numero_asegurado=${numero_asegurado}, grosormasa=${grosormasa}, uniformidad_tamaño=${uniformidad_tamaño}, uniformidad_forma=${uniformidad_forma},'+
+    'adhesion_marginal=${adhesion_marginal}, tamaño_celula_epitelial=${tamaño_celula_epitelial}, nucleo_celula=${nucleo_celula}, cromatina_blanda=${cromatina_blanda}, nucleoli_normal=${nucleoli_normal} , mitosis=${mitosis} where numero_asegurado=${numero_asegurado}',
      data)
      .then(function () {
        res.status(200)
@@ -292,7 +292,7 @@ app.post('/updatePaciente', function (req, res, next) {
 //elimina una consulta recibe un objeto {numeroAsegurado: ##}
 app.post('/deletePaciente', function (req, res, next) {
   var numAsegurado = req.body.numAsegurado;
-  db.result('delete from consultaclasificacioncancer where numeroasegurado = $1', numAsegurado)
+  db.result('delete from history where numero_asegurado = $1', numAsegurado)
     .then(function (result) {
 
       res.status(200)
