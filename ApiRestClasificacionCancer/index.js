@@ -56,8 +56,8 @@ app.get('/obtenerPacientes', function (req, res, next) {
 })
 //obtiene un paciente recibe un objeto {numeroAsegurado: ###}
 app.post('/un_paciente', function (req, res, next) {
-  data = { numero_segurado: req.body.num_asegurado }
-  db.one('select * from paciente where codigopaciente = ${numero_segurado}', data)
+  //data = { numero_segurado: req.body.num_asegurado }
+  db.one('select * from paciente where codigopaciente = ${numero_segurado}', req.body)
     .then(function (data) {
       res.status(200)
         .json({
@@ -72,10 +72,10 @@ app.post('/un_paciente', function (req, res, next) {
 })
 //inserta un paciente recibe un objeto {numeroasegurado: 4,nombre:juan ,cedula: 1,edad: 43,direccion: San ramon,telefono:88}
 app.post('/insertarPaciente', function (req, res, next) {
-  var data = { numero_asegurado: req.body.num_asegurado, nombre: req.body.name, cedula: req.body.cedula, edad: req.body.edad, direccion: req.body.dir, telefono: req.body.tel }
+  //var data = { numero_asegurado: req.body.num_asegurado, nombre: req.body.name, cedula: req.body.cedula, edad: req.body.edad, direccion: req.body.dir, telefono: req.body.tel }
   db.none('insert into paciente (numero_asegurado, nombre, cedula, edad,direccion,telefono)' +
     ' VALUES(${numero_asegurado}, ${nombre}, ${cedula}, ${edad},${direccion},${telefono})',
-    data)
+    req.body)
     .then(function () {
       res.status(200)
         .json({
@@ -89,10 +89,10 @@ app.post('/insertarPaciente', function (req, res, next) {
 })
 //actualiza un paciente recibe un objeto {numeroasegurado: 4,nombre:juan ,cedula: 1,edad: 43,direccion: San ramon,telefono:88}
 app.post('/updatePaciente', function (req, res, next) {
-  var data = { numero_asegurado: req.body.num_asegurado, nombre: req.body.name, cedula: req.body.cedula, edad: req.body.edad, direccion: req.body.dir, telefono: req.body.tel }
+  //var data = { numero_asegurado: req.body.num_asegurado, nombre: req.body.name, cedula: req.body.cedula, edad: req.body.edad, direccion: req.body.dir, telefono: req.body.tel }
   db.none('update paciente set numero_asegurado=${numero_asegurado}, nombre=${nombre}, cedula=${cedula}, edad=${edad},' +
     'direccion=${direccion}, telefono=${telefono} where numero_asegurado=${numero_asegurado}',
-    data)
+    req.body)
     .then(function () {
       res.status(200)
         .json({
@@ -106,8 +106,8 @@ app.post('/updatePaciente', function (req, res, next) {
 })
 //elimina un paciente recibe un objeto {numeroAsegurado: ##}
 app.post('/deletePaciente', function (req, res, next) {
-  var num_asegurado = req.body.num_asegurado;
-  db.result('delete from paciente where numero_asegurado = $1', num_asegurado)
+  //var num_asegurado = req.body.num_asegurado;
+  db.result('delete from paciente where numero_asegurado = $1', req.body)
     .then(function (result) {
 
       res.status(200)
@@ -142,8 +142,8 @@ app.get('/obtenerConsultas', function (req, res, next) {
 })
 //obtiene una consulta recibe un objeto {id_consulta: ###}
 app.post('/una_consulta', function (req, res, next) {
-  data = { id_consulta: req.body.id }
-  db.one('select * from history where id_consulta = ${id_consulta}', data)
+  //data = { id_consulta: req.body.id }
+  db.one('select * from history where id_consulta = ${id_consulta}', req.body)
     .then(function (data) {
       res.status(200)
         .json({
@@ -163,15 +163,15 @@ app.post('/una_consulta', function (req, res, next) {
   ,	cromatinablanda:##,nucleolinormal:##,mitosis:##}
 */
 app.post('/insertarConsulta', function (req, res, next) {
-  var data = {
+  /*var data = {
     numero_asegurado: req.body.numero_asegurado, grosormasa: req.body.grosormasa, uniformidad_tamaño: req.body.uniformidad_tamaño,
     uniformidad_forma: req.body.uniformidad_forma, adhesion_marginal: req.body.adhesion_marginal, tamaño_celula_epitelial: req.body.tamaño_celula_epitelial, nucleo_celula: req.body.nucleo_celula
     , cromatina_blanda: req.body.cromatina_blanda, nucleoli_normal: req.body.nucleoli_normal, mitosis: req.body.mitosis
-  }
+  }*/
   db.none('insert into history (numero_asegurado, grosormasa, uniformidad_tamaño, uniformidad_forma,adhesion_marginal,tamaño_celula_epitelial,nucleo_celula,' +
     'cromatina_blanda,nucleoli_normal,mitosis)' +
     ' VALUES(${numero_asegurado}, ${grosormasa}, ${uniformidad_tamaño}, ${uniformidad_forma},${adhesion_marginal},${tamaño_celula_epitelial},${nucleo_celula}, ${cromatina_blanda}, ${nucleoli_normal}, ${mitosis})',
-    data)
+    req.body)
     .then(function () {
       res.status(200)
         .json({
@@ -195,7 +195,9 @@ app.get('/actulizar_modelo', function (req, res, next) {
   try {
 
     var child_process = require('child_process');
-    var cmd = 'Rscript C:\\Users\\Efren\\Desktop\\coloquio\\clasificacionCancer\\ApiRestClasificacionCancer\\create_model.R';
+    //var cmd = 'Rscript C:\\Users\\Efren\\Desktop\\coloquio\\clasificacionCancer\\ApiRestClasificacionCancer\\create_model.R';
+    var cmd = 'Rscript C:\\Users\\Andres Steven\\Documents\\Ionic\\Proyects\\clasificacionCancer\\ApiRestClasificacionCancer\\create_model.R';
+    
     var exec = child_process.exec;
     
     exec(cmd, (error, stdout, stderr) => {
@@ -227,7 +229,9 @@ app.get('/updatePaciente', function (req, res, next) {
   try {
 
     var child_process = require('child_process');
-    var cmd = 'Rscript C:\\Users\\Efren\\Desktop\\coloquio\\clasificacionCancer\\ApiRestClasificacionCancer\\predict_model.R ' + a + " " + b + " " + c + " " + d + " " + e + " " + f + " " + g + " " + h + " " + i;
+    //var cmd = 'Rscript C:\\Users\\Efren\\Desktop\\coloquio\\clasificacionCancer\\ApiRestClasificacionCancer\\predict_model.R ' + a + " " + b + " " + c + " " + d + " " + e + " " + f + " " + g + " " + h + " " + i;
+    var cmd = 'Rscript C:\\Users\\Andres Steven\Documents\\Ionic\Proyects\\clasificacionCancer\\ApiRestClasificacionCancer\\predict_model.R ' + a + " " + b + " " + c + " " + d + " " + e + " " + f + " " + g + " " + h + " " + i;
+    
     var exec = child_process.exec;
     
     exec(cmd, (error, stdout, stderr) => {
@@ -314,8 +318,8 @@ app.post('/updatePaciente', function (req, res, next) {
 })
 //elimina una consulta recibe un objeto {numeroAsegurado: ##}
 app.post('/deletePaciente', function (req, res, next) {
-  var numAsegurado = req.body.numAsegurado;
-  db.result('delete from history where numero_asegurado = $1', numAsegurado)
+  //var numAsegurado = req.body.numAsegurado;
+  db.result('delete from history where numero_asegurado = $1', req.body)
     .then(function (result) {
 
       res.status(200)
