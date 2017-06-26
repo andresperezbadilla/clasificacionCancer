@@ -33,7 +33,7 @@ colnames(bcw)<-c('Thickness', 'Uniformity.Size',
                   'Uniformity.Shape', 'Adhesion', 'Epithelial.Size', 
                   'Nuclei', 'Chromatin', 'Nucleoli', 'Mitoses','Class')
 
-setwd('C:\\Users\\Efren\\Desktop\\coloquio\\clasificacionCancer\\ApiRestClasificacionCancer')
+setwd('C:\\Users\\Andres Steven\\Documents\\Ionic\\Proyects\\clasificacionCancer\\ApiRestClasificacionCancer')
 #bcw <- read.csv('bcw.csv', header = F, 
 #                col.names = c('Sample.number', 'Thickness', 'Uniformity.Size', 
 #                              'Uniformity.Shape', 'Adhesion', 'Epithelial.Size', 

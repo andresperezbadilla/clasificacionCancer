@@ -33,7 +33,7 @@ var options = {
 
 var pgp = require('pg-promise')(options);
 
-var connectionString = 'postgres://andres:12345@localhost:5432/clasificacion_cancer';
+var connectionString = 'postgres://andres:12345@localhost:5432/cancer_classification';
 var db = pgp(connectionString);
 
 /*-------------------------------------------CRUD PACIENTE-----------------------------------*/
@@ -142,7 +142,7 @@ app.get('/obtenerConsultas', function (req, res, next) {
 })
 //obtiene una consulta recibe un objeto {id_consulta: ###}
 app.post('/una_consulta', function (req, res, next) {
-  //data = { id_consulta: req.body.id }
+
   db.one('select * from history where id_consulta = ${id_consulta}', req.body)
     .then(function (data) {
       res.status(200)
@@ -163,11 +163,7 @@ app.post('/una_consulta', function (req, res, next) {
   ,	cromatinablanda:##,nucleolinormal:##,mitosis:##}
 */
 app.post('/insertarConsulta', function (req, res, next) {
-  /*var data = {
-    numero_asegurado: req.body.numero_asegurado, grosormasa: req.body.grosormasa, uniformidad_tamaño: req.body.uniformidad_tamaño,
-    uniformidad_forma: req.body.uniformidad_forma, adhesion_marginal: req.body.adhesion_marginal, tamaño_celula_epitelial: req.body.tamaño_celula_epitelial, nucleo_celula: req.body.nucleo_celula
-    , cromatina_blanda: req.body.cromatina_blanda, nucleoli_normal: req.body.nucleoli_normal, mitosis: req.body.mitosis
-  }*/
+
   db.none('insert into history (numero_asegurado, grosormasa, uniformidad_tamaño, uniformidad_forma,adhesion_marginal,tamaño_celula_epitelial,nucleo_celula,' +
     'cromatina_blanda,nucleoli_normal,mitosis)' +
     ' VALUES(${numero_asegurado}, ${grosormasa}, ${uniformidad_tamaño}, ${uniformidad_forma},${adhesion_marginal},${tamaño_celula_epitelial},${nucleo_celula}, ${cromatina_blanda}, ${nucleoli_normal}, ${mitosis})',
@@ -196,7 +192,7 @@ app.get('/actulizar_modelo', function (req, res, next) {
 
     var child_process = require('child_process');
     //var cmd = 'Rscript C:\\Users\\Efren\\Desktop\\coloquio\\clasificacionCancer\\ApiRestClasificacionCancer\\create_model.R';
-    var cmd = 'Rscript C:\\Users\\Andres Steven\\Documents\\Ionic\\Proyects\\clasificacionCancer\\ApiRestClasificacionCancer\\create_model.R';
+    var cmd = 'Rscript C:/Users/"Andres Steven"/Documents/Ionic/Proyects/clasificacionCancer/ApiRestClasificacionCancer/create_model.R';
     
     var exec = child_process.exec;
     
@@ -256,9 +252,7 @@ app.get('/updatePaciente', function (req, res, next) {
 })
 
 app.post('/updatePaciente', function (req, res, next) {
-  /* var data = {numero_asegurado:req.body.numero_asegurado,grosormasa:req.body.grosormasa,uniformidad_tamaño:req.body.uniformidad_tamaño,
-     uniformidad_forma:req.body.uniformidad_forma,adhesion_marginal:req.body.adhesion_marginal,	tamaño_celula_epitelial:req.body.tamaño_celula_epitelial,nucleo_celula:req.body.nucleo_celula
-   ,	cromatina_blanda:req.body.cromatina_blanda,nucleoli_normal:req.body.nucleoli_normal,mitosis:req.body.mitosis}
+  /*
    db.none('update history set numero_asegurado=${numero_asegurado}, grosormasa=${grosormasa}, uniformidad_tamaño=${uniformidad_tamaño}, uniformidad_forma=${uniformidad_forma},'+
     'adhesion_marginal=${adhesion_marginal}, tamaño_celula_epitelial=${tamaño_celula_epitelial}, nucleo_celula=${nucleo_celula}, cromatina_blanda=${cromatina_blanda}, nucleoli_normal=${nucleoli_normal} , mitosis=${mitosis} where numero_asegurado=${numero_asegurado}',
      data)
