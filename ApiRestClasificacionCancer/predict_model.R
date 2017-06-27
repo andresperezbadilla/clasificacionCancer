@@ -9,7 +9,7 @@ g <- as.double(args[7])
 h <- as.double(args[8])
 i <- as.double(args[9])
 
-modelo.arbol <- readRDS(path.expand("C:\\Users\Andres Steven\\Documents\\Ionic\\Proyects\\clasificacionCancer\\ApiRestClasificacionCancer\\modelo.rds"))
+modelo.arbol <- readRDS(path.expand("C:\\Users\\Efren\\Desktop\\coloquio\\clasificacionCancer\\ApiRestClasificacionCancer\\modelo.rds"))
 #data=data.frame(8,10,10,8,7,10,9,7,1)
 data=data.frame(a,b,c,d,e,f,g,h,i)
 colnames(data)<-c('Thickness', 'Uniformity.Size', 

@@ -1,4 +1,4 @@
-#librer�as utiliadas (puede que necesiten instalar una o m�s de estas librer�as, en ese caso, utilicen install.library(caTools)
+#librerias utiliadas (puede que necesiten instalar una o m�s de estas librer�as, en ese caso, utilicen install.library(caTools)
 library(rpart)
 library(caTools)
 
@@ -33,7 +33,7 @@ colnames(bcw)<-c('Thickness', 'Uniformity.Size',
                   'Uniformity.Shape', 'Adhesion', 'Epithelial.Size', 
                   'Nuclei', 'Chromatin', 'Nucleoli', 'Mitoses','Class')
 
-setwd('C:\\Users\\Andres Steven\\Documents\\Ionic\\Proyects\\clasificacionCancer\\ApiRestClasificacionCancer')
+setwd('C:\\Users\\Efren\\Desktop\\coloquio\\clasificacionCancer\\ApiRestClasificacionCancer')
 #bcw <- read.csv('bcw.csv', header = F, 
 #                col.names = c('Sample.number', 'Thickness', 'Uniformity.Size', 
 #                              'Uniformity.Shape', 'Adhesion', 'Epithelial.Size', 
@@ -53,6 +53,11 @@ modelo.arbol <- rpart(Class ~ .,
                       method =  'class')
 
 saveRDS(modelo.arbol, "modelo.rds")
+
+plot(modelo.arbol, uniform=TRUE, 
+     main="Classification Tree for Kyphosis")
+text(modelo.arbol, use.n=TRUE, all=TRUE, cex=.8)
+
 predicciones <- predict(modelo.arbol, newdata = bcw.prueba, type = 'class')
 table<-table(bcw.prueba$Class, predicciones)
 str(((table[1][1] +table[4][1])/nrow(bcw.prueba)*100))

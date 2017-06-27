@@ -34,8 +34,9 @@ export class MovieService {
 
     postvalues(data){
         console.log(data + "datos post");
-        var url = 'http://localhost:8080/updatePaciente';
+        var url = 'http://localhost:8080/consulta';
         var response = this.http.post(url,data);
+        console.log(response);
         this.users = response;
         return response;
     }

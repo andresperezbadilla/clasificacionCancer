@@ -63,6 +63,7 @@ export class ConsultaPage {
     
     this.movieService.postvalues(value).subscribe(
       data => {
+        console.log(data.text());
         this.authForm.controls['response'].setValue(data.text());
       },
       err => {

@@ -6,27 +6,7 @@ var cors = require('cors');
 
 app.use(bodyParser.json())
 
-app.use(cors({origin: 'http://localhost:8100'}));
-
-app.use(function (req, res, next) {
-
-    // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8100');
-
-    // Request methods you wish to allow
-    res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
-
-    // Request headers you wish to allow
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-
-    // Set to true if you need the website to include cookies in the requests sent
-    // to the API (e.g. in case you use sessions)
-    res.setHeader('Access-Control-Allow-Credentials', true);
-
-    // Pass to next layer of middleware
-    next();
-});
-
+app.use(cors({ origin: 'http://localhost:8100' }));
 
 var options = {
   // Initialization Options
@@ -35,7 +15,8 @@ var options = {
 
 var pgp = require('pg-promise')(options);
 
-var connectionString = 'postgres://andres:12345@localhost:5432/cancer_classification';
+//var connectionString = 'postgres://andres:12345@localhost:5432/cancer_classification';
+var connectionString = 'postgres://postgres:12345@localhost:5432/cancer_classification';
 var db = pgp(connectionString);
 
 /*-------------------------------------------CRUD PACIENTE-----------------------------------*/
@@ -193,11 +174,11 @@ app.get('/actulizar_modelo', function (req, res, next) {
   try {
 
     var child_process = require('child_process');
-    //var cmd = 'Rscript C:\\Users\\Efren\\Desktop\\coloquio\\clasificacionCancer\\ApiRestClasificacionCancer\\create_model.R';
-    var cmd = 'Rscript C:/Users/"Andres Steven"/Documents/Ionic/Proyects/clasificacionCancer/ApiRestClasificacionCancer/create_model.R';
-    
+    var cmd = 'Rscript C:\\Users\\Efren\\Desktop\\coloquio\\clasificacionCancer\\ApiRestClasificacionCancer\\create_model.R';
+    // var cmd = 'Rscript C:/Users/"Andres Steven"/Documents/Ionic/Proyects/clasificacionCancer/ApiRestClasificacionCancer/create_model.R';
+
     var exec = child_process.exec;
-    
+
     exec(cmd, (error, stdout, stderr) => {
       if (error) {
         console.error(error);
@@ -227,11 +208,11 @@ app.get('/updatePaciente', function (req, res, next) {
   try {
 
     var child_process = require('child_process');
-    //var cmd = 'Rscript C:\\Users\\Efren\\Desktop\\coloquio\\clasificacionCancer\\ApiRestClasificacionCancer\\predict_model.R ' + a + " " + b + " " + c + " " + d + " " + e + " " + f + " " + g + " " + h + " " + i;
-    var cmd = 'Rscript C:/Users/Andres Steven/Documents/Ionic/Proyects/clasificacionCancer/ApiRestClasificacionCancer/predict_model.R ' + a + " " + b + " " + c + " " + d + " " + e + " " + f + " " + g + " " + h + " " + i;
-    
+    var cmd = 'Rscript C:\\Users\\Efren\\Desktop\\coloquio\\clasificacionCancer\\ApiRestClasificacionCancer\\predict_model.R ' + a + " " + b + " " + c + " " + d + " " + e + " " + f + " " + g + " " + h + " " + i;
+    //var cmd = 'Rscript C:/Users/Andres Steven/Documents/Ionic/Proyects/clasificacionCancer/ApiRestClasificacionCancer/predict_model.R ' + a + " " + b + " " + c + " " + d + " " + e + " " + f + " " + g + " " + h + " " + i;
+
     var exec = child_process.exec;
-    
+
     exec(cmd, (error, stdout, stderr) => {
       if (error) {
         console.error(error);
@@ -253,32 +234,16 @@ app.get('/updatePaciente', function (req, res, next) {
   }
 })
 
-app.post('/updatePaciente', function (req, res, next) {
-  /*
-   db.none('update history set numero_asegurado=${numero_asegurado}, grosormasa=${grosormasa}, uniformidad_tamaño=${uniformidad_tamaño}, uniformidad_forma=${uniformidad_forma},'+
-    'adhesion_marginal=${adhesion_marginal}, tamaño_celula_epitelial=${tamaño_celula_epitelial}, nucleo_celula=${nucleo_celula}, cromatina_blanda=${cromatina_blanda}, nucleoli_normal=${nucleoli_normal} , mitosis=${mitosis} where numero_asegurado=${numero_asegurado}',
-     data)
-     .then(function () {
-       res.status(200)
-         .json({
-           status: 'success',
-           message: 'Updated consulta'
-         });
-     })
-     .catch(function (err) {
-       return next(err);
-     });*/
-
-
-  a = grosormasa;
-  b = uniformidadtamaño;
-  c = uniformidadforma;
-  d = adhesionmarginal;
-  e = tamañocelulaepitelial;
-  f = nucleocelula;
-  g = cromatinablanda;
-  h = nucleolinormal;
-  i = mitosis;
+app.post('/consulta', function (req, res, next) {
+  /* a = grosormasa;
+   b = uniformidadtamaño;
+   c = uniformidadforma;
+   d = adhesionmarginal;
+   e = tamañocelulaepitelial;
+   f = nucleocelula;
+   g = cromatinablanda;
+   h = nucleolinormal;
+   i = mitosis;*/
 
   a = req.body.grosor_masa;
   b = req.body.uniformidad_tamaño;
@@ -291,7 +256,9 @@ app.post('/updatePaciente', function (req, res, next) {
   i = req.body.mitosis;
 
   var child_process = require('child_process');
-  var cmd = 'Rscript C:/Users/"Andres Steven"/Documents/Ionic/Proyects/clasificacionCancer/ApiRestClasificacionCancer/predict_model.R ' + a + " " + b + " " + c + " " + d + " " + e + " " + f + " " + g + " " + h + " " + i;
+  var cmd = 'Rscript C:\\Users\\Efren\\Desktop\\coloquio\\clasificacionCancer\\ApiRestClasificacionCancer\\predict_model.R ' + a + " " + b + " " + c + " " + d + " " + e + " " + f + " " + g + " " + h + " " + i;
+
+  //var cmd = 'Rscript C:/Users/"Andres Steven"/Documents/Ionic/Proyects/clasificacionCancer/ApiRestClasificacionCancer/predict_model.R ' + a + " " + b + " " + c + " " + d + " " + e + " " + f + " " + g + " " + h + " " + i;
   var exec = child_process.exec;
 
   exec(cmd, (error, stdout, stderr) => {
@@ -299,13 +266,13 @@ app.post('/updatePaciente', function (req, res, next) {
       console.error(error);
       return;
     }
-    response = stdout.replace("[1]", "").replace("[1]", "").split("\r\n");
-
-    if (response[0].trim() == 1) {
-      return "benigno";
+    response = stdout.replace("[1]", "").split("\r\n");
+    console.log(response[0].trim().split(" ")[0]);
+    if (response[0].trim().split(" ")[0]==1) {
+      res.end("benigno");
     }
     else {
-      return "maligno";
+      res.end("maligno");
     }
   });
 
