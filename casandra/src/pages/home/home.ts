@@ -1,0 +1,16 @@
+import { Component } from '@angular/core';
+import { NavController } from 'ionic-angular';
+import { ConsultaPage } from '../consulta/consulta';
+
+@Component({
+  selector: 'page-home',
+  templateUrl: 'home.html'
+})
+export class HomePage {
+  ConsultaPage = ConsultaPage
+
+  constructor(public navCtrl: NavController) {
+
+  }
+
+}

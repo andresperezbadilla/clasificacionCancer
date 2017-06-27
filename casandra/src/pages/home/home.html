@@ -1,0 +1,31 @@
+<ion-content>
+  <div class="hero no-header flat">
+    <div class="content">
+      <img text-center style="display: inline-block;margin: auto;max-width: 50%;" src="assets/img/login_logo.png">
+      <h1>Casandra Medicine Assistance</h1>
+    </div>
+  </div>
+  <ion-list no-lines>
+    <ion-item>
+      <ion-label floating>User Name</ion-label>
+      <ion-input type="text"></ion-input>
+    </ion-item>
+    <ion-item>
+      <ion-label floating>Password</ion-label>
+      <ion-input type="Password"></ion-input>
+    </ion-item>
+    <ion-item>
+      <a ng-href="#/app/forgot" class="button button-clear button-block button-positive" href="#/app/forgot">
+        Forgot Password?
+        </a>
+    </ion-item>
+  </ion-list>
+  <div class="padding">
+    <button class="button button-full button-assertive ink" [navPush]="ConsultaPage">Login</button>
+  </div>
+  <div class="button-bar social-login">
+    <button class="button button-small button-border icon-left ion-social-google button-assertive-900">Google+</button>
+    <button class="button button-small button-border icon-left ion-social-twitter button-calm-900">Twitter</button>
+    <button class="button button-small button-border icon-left ion-social-facebook button-positive-900">Facebook</button>
+  </div>
+</ion-content>

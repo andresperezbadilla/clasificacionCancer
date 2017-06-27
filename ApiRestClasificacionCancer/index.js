@@ -4,12 +4,14 @@ var bodyParser = require('body-parser');
 var promise = require('bluebird');
 var cors = require('cors');
 
-app.use(cors({origin: 'http://localhost:8101/'}));
+app.use(bodyParser.json())
+
+app.use(cors({origin: 'http://localhost:8100'}));
 
 app.use(function (req, res, next) {
 
     // Website you wish to allow to connect
-    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8101');
+    res.setHeader('Access-Control-Allow-Origin', 'http://localhost:8100');
 
     // Request methods you wish to allow
     res.setHeader('Access-Control-Allow-Methods', 'GET, POST, OPTIONS, PUT, PATCH, DELETE');
@@ -226,7 +228,7 @@ app.get('/updatePaciente', function (req, res, next) {
 
     var child_process = require('child_process');
     //var cmd = 'Rscript C:\\Users\\Efren\\Desktop\\coloquio\\clasificacionCancer\\ApiRestClasificacionCancer\\predict_model.R ' + a + " " + b + " " + c + " " + d + " " + e + " " + f + " " + g + " " + h + " " + i;
-    var cmd = 'Rscript C:\\Users\\Andres Steven\Documents\\Ionic\Proyects\\clasificacionCancer\\ApiRestClasificacionCancer\\predict_model.R ' + a + " " + b + " " + c + " " + d + " " + e + " " + f + " " + g + " " + h + " " + i;
+    var cmd = 'Rscript C:/Users/Andres Steven/Documents/Ionic/Proyects/clasificacionCancer/ApiRestClasificacionCancer/predict_model.R ' + a + " " + b + " " + c + " " + d + " " + e + " " + f + " " + g + " " + h + " " + i;
     
     var exec = child_process.exec;
     
@@ -278,18 +280,18 @@ app.post('/updatePaciente', function (req, res, next) {
   h = nucleolinormal;
   i = mitosis;
 
-  a = 8;
-  b = 10;
-  c = 10;
-  d = 8;
-  e = 7;
-  f = 10;
-  g = 9;
-  h = 7;
-  i = 1;
+  a = req.body.grosor_masa;
+  b = req.body.uniformidad_tamaño;
+  c = req.body.uniformidad_forma;
+  d = req.body.adhesion_marginal;
+  e = req.body.tamaño_celula_epitelial;
+  f = req.body.nucleo_celula;
+  g = req.body.cromatina_blanda;
+  h = req.body.nucleoli_normal;
+  i = req.body.mitosis;
 
   var child_process = require('child_process');
-  var cmd = 'Rscript C:\\Users\\Efren\\Desktop\\coloquio\\predict_model.R ' + a + " " + b + " " + c + " " + d + " " + e + " " + f + " " + g + " " + h + " " + i;
+  var cmd = 'Rscript C:/Users/"Andres Steven"/Documents/Ionic/Proyects/clasificacionCancer/ApiRestClasificacionCancer/predict_model.R ' + a + " " + b + " " + c + " " + d + " " + e + " " + f + " " + g + " " + h + " " + i;
   var exec = child_process.exec;
 
   exec(cmd, (error, stdout, stderr) => {

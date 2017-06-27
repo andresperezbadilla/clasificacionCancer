@@ -1,0 +1,76 @@
+<ion-header>
+  <ion-navbar>
+    <ion-title>
+      Casandra
+    </ion-title>
+  </ion-navbar>
+</ion-header>
+
+
+
+<ion-content class="home" padding>
+  <img text-center style="display: inline-block;margin: auto;max-width: 50%;" src="assets/img/login_logo.png">
+  <h1>Clasificación cancér</h1>
+
+  <form [formGroup]="authForm" (ngSubmit)="onSubmit($event,authForm.value)">
+
+
+    <ion-item>
+      <ion-label floating>Numero Paciente</ion-label>
+      <ion-input formControlName="numero_paciente"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Grosor de la masa</ion-label>
+      <ion-input formControlName="grosor_masa"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Uniformidad del tamaño de la celula</ion-label>
+      <ion-input formControlName="uniformidad_tamaño"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Uniformidad de la forma de la celula</ion-label>
+      <ion-input formControlName="uniformidad_forma"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Adhesion marginal</ion-label>
+      <ion-input formControlName="adhesion_marginal"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Tamaño de la celula epitelial</ion-label>
+      <ion-input formControlName="tamaño_celula_epitelial"></ion-input>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label floating>Nucleo de la celula</ion-label>
+      <ion-input formControlName="nucleo_celula"></ion-input>
+    </ion-item>
+
+
+    <ion-item>
+      <ion-label floating>Cromatina blanda</ion-label>
+      <ion-input formControlName="cromatina_blanda"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Nucleoli normal</ion-label>
+      <ion-input formControlName="nucleoli_normal"></ion-input>
+    </ion-item>
+
+    <ion-item>
+      <ion-label floating>Mitosis</ion-label>
+      <ion-input formControlName="mitosis"></ion-input>
+    </ion-item>
+
+    <button type="submit" class="button button-full button-assertive ink">Submit</button>
+
+  </form>
+
+  <ion-label floating>{{authForm.value.response}}</ion-label>
+
+</ion-content>
