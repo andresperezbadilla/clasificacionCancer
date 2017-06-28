@@ -11,7 +11,7 @@
 <ion-content class="home" padding>
   <img text-center style="display: inline-block;margin: auto;max-width: 50%;" src="assets/img/login_logo.png">
   <h1>Clasificación cancér</h1>
-
+  
   <form [formGroup]="authForm" (ngSubmit)="onSubmit($event,authForm.value)">
 
 
@@ -67,10 +67,11 @@
       <ion-input formControlName="mitosis"></ion-input>
     </ion-item>
 
+<<<<<<< HEAD
     <button type="submit" class="button button-full button-assertive ink">Enviar</button>
+=======
+    <button type="submit" class="button button-full button-assertive ink">Consultar</button>
+>>>>>>> 8267216bacbe785d1dcaaf3cca11d020d67ce60a
 
   </form>
-
-  <ion-label floating>{{authForm.value.response}}</ion-label>
-
 </ion-content>

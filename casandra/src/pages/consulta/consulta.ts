@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { IonicPage, NavController, NavParams,Modal, ModalController } from 'ionic-angular';
 import { MovieService } from './consulta_service';
 
 import { FormBuilder, AbstractControl, FormGroup, Validators } from '@angular/forms';
@@ -32,7 +32,7 @@ export class ConsultaPage {
   mitosis: AbstractControl;
 
   constructor(private navController: NavController, private movieService: MovieService,
-    private fb: FormBuilder) {
+    private fb: FormBuilder, private modal : ModalController) {
     this.authForm = fb.group({
       "numero_paciente": [""],
       "grosor_masa": [""],
@@ -64,7 +64,24 @@ export class ConsultaPage {
     this.movieService.postvalues(value).subscribe(
       data => {
         console.log(data.text());
-        this.authForm.controls['response'].setValue(data.text());
+        
+        var myData = {
+          predict : data,
+          porcent : {}
+        }
+
+        this.movieService.getvalues(value).subscribe(
+          datos => {
+            console.log(datos.text() + "soy datos");
+            myData.porcent = datos
+          },
+          err => {
+            console.log(err);
+          }
+        );
+        
+        const myModal : Modal = this.modal.create('ModalPage',myData);
+        myModal.present();
       },
       err => {
         console.log(err);
