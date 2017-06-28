@@ -53,10 +53,7 @@ modelo.arbol <- rpart(Class ~ .,
                       method =  'class')
 
 saveRDS(modelo.arbol, "modelo.rds")
-
-plot(modelo.arbol, uniform=TRUE, 
-     main="Classification Tree for Kyphosis")
-text(modelo.arbol, use.n=TRUE, all=TRUE, cex=.8)
+#fancyRpartPlot(modelo.arbol)
 
 predicciones <- predict(modelo.arbol, newdata = bcw.prueba, type = 'class')
 table<-table(bcw.prueba$Class, predicciones)
