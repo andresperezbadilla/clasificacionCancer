@@ -6,7 +6,7 @@ var cors = require('cors');
 
 app.use(bodyParser.json())
 
-app.use(cors({ origin: 'http://localhost:8100' }));
+app.use(cors({ origin: 'http://localhost:8101' }));
 
 var options = {
   // Initialization Options
@@ -184,7 +184,7 @@ app.get('/actulizar_modelo', function (req, res, next) {
         console.error(error);
         return;
       }
-      res.end(stdout);
+      res.send(stdout);
     });
 
   }
@@ -269,10 +269,10 @@ app.post('/consulta', function (req, res, next) {
     response = stdout.replace("[1]", "").split("\r\n");
     console.log(response[0].trim().split(" ")[0]);
     if (response[0].trim().split(" ")[0]==1) {
-      res.end("benigno");
+      res.send("benigno");
     }
     else {
-      res.end("maligno");
+      res.send("maligno");
     }
   });
 

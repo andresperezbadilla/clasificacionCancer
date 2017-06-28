@@ -13,15 +13,18 @@ import { IonicPage, NavController, NavParams, ViewController } from 'ionic-angul
   templateUrl: 'modal.html',
 })
 export class ModalPage {
-  respuesta : String
+  respuestaModelo : String;
+  respuesta : String;
   constructor(public navCtrl: NavController, private navParams: NavParams,private view : ViewController) {
-    this.respuesta = "Carlos"
+    this.respuesta = ""
+    this.respuestaModelo = ""
   }
 
   ionViewWillLoad() {
     var predict = this.navParams.get('predict');
     var porcent = this.navParams.get('porcent');
-    this.respuesta = "Su cancer es " + predict.text() + "\n" + "El porcentaje del modelo es de " + porcent.text();
+    this.respuesta = "Su cancer es " + predict;
+    this.respuestaModelo="El porcentaje del modelo es de " + porcent;
   }
 
   close(){

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams,Modal, ModalController } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, Modal, ModalController } from 'ionic-angular';
 import { MovieService } from './consulta_service';
+import { ModalPage } from '../modal/modal';
 
 import { FormBuilder, AbstractControl, FormGroup, Validators } from '@angular/forms';
 
@@ -32,19 +33,19 @@ export class ConsultaPage {
   mitosis: AbstractControl;
 
   constructor(private navController: NavController, private movieService: MovieService,
-    private fb: FormBuilder, private modal : ModalController) {
+    private fb: FormBuilder, private modal: ModalController) {
     this.authForm = fb.group({
-      "numero_paciente": [""],
-      "grosor_masa": [""],
-      "uniformidad_tamaño": [""],
-      "uniformidad_forma": [""],
-      "adhesion_marginal": [""],
-      "tamaño_celula_epitelial": [""],
-      "nucleo_celula": [""],
-      "cromatina_blanda": [""],
-      "nucleoli_normal": [""],
-      "mitosis": [""],
-      "response": [""],
+      "numero_paciente": ["1"],
+      "grosor_masa": ["1"],
+      "uniformidad_tamaño": ["1"],
+      "uniformidad_forma": ["1"],
+      "adhesion_marginal": ["1"],
+      "tamaño_celula_epitelial": ["1"],
+      "nucleo_celula": ["1"],
+      "cromatina_blanda": ["1"],
+      "nucleoli_normal": ["1"],
+      "mitosis": ["1"],
+      "response": ["1"],
     });
     this.numero_paciente = this.authForm.controls['numero_paciente'];
     this.grosor_masa = this.authForm.controls['grosor_masa'];
@@ -58,30 +59,27 @@ export class ConsultaPage {
     this.mitosis = this.authForm.controls['mitosis'];
   }
 
-  onSubmit(event,value: string): void {
+  onSubmit(event, value: string): void {
     console.log('Submitted value: ', value);
-    
+
     this.movieService.postvalues(value).subscribe(
       data => {
-        console.log(data.text());
-        
         var myData = {
-          predict : data,
-          porcent : {}
+          predict: data.text(),
+          porcent: ''
         }
 
         this.movieService.getvalues(value).subscribe(
           datos => {
-            console.log(datos.text() + "soy datos");
-            myData.porcent = datos
+            myData.porcent = datos.text().replace("num ", "");
+            console.log("dsdsd"+myData.porcent);
+            const myModal: Modal = this.modal.create('ModalPage', myData);
+            myModal.present();
           },
           err => {
             console.log(err);
           }
         );
-        
-        const myModal : Modal = this.modal.create('ModalPage',myData);
-        myModal.present();
       },
       err => {
         console.log(err);
