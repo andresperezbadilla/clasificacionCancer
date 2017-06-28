@@ -25,7 +25,7 @@ export class MovieService {
 
     getvalues(params) {
         params="hola";
-        var url = 'http://localhost:8080/updatePaciente';
+        var url = 'http://localhost:8080/actulizar_modelo';
         var response = this.http.get(url);
         this.users = response;
         return response;

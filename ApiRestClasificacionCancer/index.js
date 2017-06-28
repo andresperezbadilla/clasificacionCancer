@@ -297,7 +297,15 @@ app.post('/deletePaciente', function (req, res, next) {
     });
 })
 
+app.post('/prueba', function (req, res, next) {
+  
+  res.send("recibido con ")
+})
 
+app.get('/prueba1', function (req, res, next) {
+
+  res.send("18%")
+})
 
 
 app.listen(8080, function () {
