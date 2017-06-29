@@ -25,8 +25,24 @@ export class MovieService {
 
     getvalues(params) {
         params="hola";
-        var url = 'http://localhost:8080/actulizar_modelo';
+        var url = 'http://172.24.1.163:8080/actulizar_modelo';
+        var urlInsertar = 'http://172.24.1.163:8080/insertarModelo';
         var response = this.http.get(url);
+        var data = {
+            porcent : '',
+            fecha : '18/6/2071'
+        }
+        
+        response.subscribe(
+          datos => {
+            data.porcent = datos.text().replace("num ", "");
+          },
+          err => {
+            console.log(err);
+          }
+        );
+        
+        var insert = this.http.post(urlInsertar,data);
         this.users = response;
         return response;
         
@@ -34,8 +50,10 @@ export class MovieService {
 
     postvalues(data){
         console.log(data + "datos post");
-        var url = 'http://localhost:8080/consulta';
+        var url = 'http://172.24.1.163:8080/consulta';
+        var urlInsertar = 'http://172.24.1.163:8080/insertarConsulta';
         var response = this.http.post(url,data);
+        var insert = this.http.post(urlInsertar,data);
         this.users = response;
         return response;
     }
