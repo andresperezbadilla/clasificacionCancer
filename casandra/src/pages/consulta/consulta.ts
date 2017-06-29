@@ -21,41 +21,41 @@ export class ConsultaPage {
 
   movies: Array<any>;
   authForm: FormGroup;
-  numero_paciente: AbstractControl;
+  numero_asegurado: AbstractControl;
   grosor_masa: AbstractControl;
-  uniformidad_tamaño: AbstractControl;
+  uniformidad_tamano: AbstractControl;
   uniformidad_forma: AbstractControl;
   adhesion_marginal: AbstractControl;
-  tamaño_celula_epitelial: AbstractControl;
+  tamano_celula_epitelial: AbstractControl;
   nucleo_celula: AbstractControl;
   cromatina_blanda: AbstractControl;
-  nucleoli_normal: AbstractControl;
+  nucleoli: AbstractControl;
   mitosis: AbstractControl;
 
   constructor(private navController: NavController, private movieService: MovieService,
     private fb: FormBuilder, private modal: ModalController) {
     this.authForm = fb.group({
-      "numero_paciente": ["1"],
-      "grosor_masa": ["1"],
-      "uniformidad_tamaño": ["1"],
-      "uniformidad_forma": ["1"],
-      "adhesion_marginal": ["1"],
-      "tamaño_celula_epitelial": ["1"],
-      "nucleo_celula": ["1"],
-      "cromatina_blanda": ["1"],
-      "nucleoli_normal": ["1"],
-      "mitosis": ["1"],
-      "response": ["1"],
+      "numero_asegurado": [""],
+      "grosor_masa": [""],
+      "uniformidad_tamano": [""],
+      "uniformidad_forma": [""],
+      "adhesion_marginal": [""],
+      "tamano_celula_epitelial": [""],
+      "nucleo_celula": [""],
+      "cromatina_blanda": [""],
+      "nucleoli": [""],
+      "mitosis": [""],
+      "response": [""],
     });
-    this.numero_paciente = this.authForm.controls['numero_paciente'];
+    this.numero_asegurado = this.authForm.controls['numero_asegurado'];
     this.grosor_masa = this.authForm.controls['grosor_masa'];
-    this.uniformidad_tamaño = this.authForm.controls['uniformidad_tamaño'];
+    this.uniformidad_tamano = this.authForm.controls['uniformidad_tamano'];
     this.uniformidad_forma = this.authForm.controls['uniformidad_forma'];
     this.adhesion_marginal = this.authForm.controls['adhesion_marginal'];
-    this.tamaño_celula_epitelial = this.authForm.controls['tamaño_celula_epitelial'];
+    this.tamano_celula_epitelial = this.authForm.controls['tamano_celula_epitelial'];
     this.nucleo_celula = this.authForm.controls['nucleo_celula'];
     this.cromatina_blanda = this.authForm.controls['cromatina_blanda'];
-    this.nucleoli_normal = this.authForm.controls['nucleoli_normal'];
+    this.nucleoli = this.authForm.controls['nucleoli'];
     this.mitosis = this.authForm.controls['mitosis'];
   }
 
